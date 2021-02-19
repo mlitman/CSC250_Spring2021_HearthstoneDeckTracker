@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class URLReader 
 {
 	private String urlString;
-	private String theURLContents;
+	public String theURLContents;
 	
 	public URLReader(String urlString)
 	{
@@ -14,6 +14,7 @@ public class URLReader
 		//get the contents of that URL and fill theURLContents
 		this.readFromURL();
 	}
+	
 	
 	public void display()
 	{
