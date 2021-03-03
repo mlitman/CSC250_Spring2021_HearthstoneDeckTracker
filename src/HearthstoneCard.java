@@ -33,6 +33,12 @@ public class HearthstoneCard
 		return this.cost;
 	}
 	
+	
+	public int getAttack() 
+	{
+		return attack;
+	}
+
 	//setters allow us to conditionally change the value of a private member
 	public void setName(String name)
 	{

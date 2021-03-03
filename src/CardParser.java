@@ -30,7 +30,7 @@ public class CardParser
 		    		if(cardData.containsKey("type") && cardData.get("type").equals("MINION"))
 		    		{
 		    			//I am only here is this is a minion card!!!
-		    			System.out.println(cardData.keySet().toString());
+		    			//System.out.println(cardData.keySet().toString());
 		    			String name = (String)cardData.get("name");
 		    			int cost = Integer.parseInt(cardData.get("cost").toString());
 		    			int attack = Integer.parseInt(cardData.get("attack").toString());
@@ -73,6 +73,57 @@ public class CardParser
 			HearthstoneCard temp;
 			while(currIndex > 0 && this.theMinions.get(currIndex).getCost() < 
 					this.theMinions.get(currIndex-1).getCost())
+			{
+				//we swap the 2 places
+				temp = this.theMinions.get(currIndex);
+				this.theMinions.set(currIndex, this.theMinions.get(currIndex-1));
+				this.theMinions.set(currIndex-1, temp);
+				currIndex--;
+				
+			}	
+		}
+	}
+	
+	//this guy returns the first card it finds with an attack of attack or null if no card was found
+	public HearthstoneCard binarySearchOnAttack(int attack)
+	{
+		this.insertionSortLowestAttackToHighestAttack();
+		int currStart = 0;
+		int currEnd = this.theMinions.size()-1;
+		int middle;
+		HearthstoneCard temp;
+		
+		//keep checking as long as the start is less than or equal to the end
+		while(currStart <= currEnd)
+		{
+			middle = (currStart + currEnd)/2; //integer division so the decimal point truncates
+			temp = this.theMinions.get(middle);
+			if(temp.getAttack() == attack)
+			{
+				return this.theMinions.get(middle);
+			}
+			else if(attack < temp.getAttack())
+			{
+				currEnd = middle - 1;
+			}
+			else
+			{
+				currStart = middle + 1;
+			}
+		}
+		return null;
+	}
+	
+	public void insertionSortLowestAttackToHighestAttack()
+	{
+		for(int currStart = 1; currStart < this.theMinions.size(); currStart++)
+		{
+			//try to move the value at currStart as far up the array as possible
+			//then move on to the next currStart
+			int currIndex = currStart;
+			HearthstoneCard temp;
+			while(currIndex > 0 && this.theMinions.get(currIndex).getAttack() < 
+					this.theMinions.get(currIndex-1).getAttack())
 			{
 				//we swap the 2 places
 				temp = this.theMinions.get(currIndex);
